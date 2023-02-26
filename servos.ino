@@ -21,7 +21,7 @@ double time;
 
 Servo servobase;
 Servo servoarm;
-Servo servorotate;
+//Servo servorotate;
 Servo spoontilt;
 
 void setup() {
@@ -36,7 +36,7 @@ void setup() {
   //servorotate.write(0);
 
   spoontilt.attach(9);
-  spoontilt.write(90); // 0 is facing toward ground
+  spoontilt.write(100); // 0 is facing toward ground
 
 
 Serial.begin(9600);
@@ -51,15 +51,15 @@ void loop() {
 
   // put your main code here, to run repeatedly:
 
-for (int i =90; i < 0; i--) {
+for (int i =90; i < 20; i--) {
   servoarm.write(i);  // Go down to bowl level
   delay(50);
 }
   delay(2000);
-  for (int j =0; j < 45; j++) {
+  for (int j =100; j < 45; j--) {
   spoontilt.write(j); //Tilt spoon down
   //servorotate.write(i);  //Turn spoon back
-  delay(15);
+  delay(70);
   }
   delay(2000);
 
@@ -77,30 +77,12 @@ for (int i =90; i < 0; i--) {
   }
   delay(2000);
 
-//Polling ultrasonic sensor
-digitalWrite(7,LOW);
-delayMicroseconds(2);
-digitalWrite(7,HIGH);
-delayMicroseconds(10);
-time = pulseIn(8,HIGH);
-
-dist = time * 0.0133 / 2; //Inches
-int x=0;
-
-
-while (dist > 6 & x < 50) {
-  x += 5;
-servoarm.write(x);  // Raise arm until in range of face
-delay(500);
-
-digitalWrite(7,LOW);
-delayMicroseconds(2);
-digitalWrite(7,HIGH);
-delayMicroseconds(10);
-time = pulseIn(8,HIGH);
-
-dist = time * 0.0133 / 2; //Inches
+for (int z = 100; z < 20; z--) {
+servoarm.write(z);  // Raise arm until in range of face
+delay(100);
 }
+
+
   delay(2000);
   for (int n = 60; n < 90;n++) {
   servobase.write(n); //Move spoon to mouth and wait for 7s
@@ -113,6 +95,7 @@ dist = time * 0.0133 / 2; //Inches
   
   servobase.write(45);
   servoarm.write(90);
-  servorotate.write(0);
+  spoontilt.write(80);
+  //servorotate.write(0);
   delay(2000);
 }
